@@ -7,6 +7,7 @@ const autoprefixer = require('autoprefixer');
 
 const globImporter = require('node-sass-glob-importer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 
 let plugins = [
   new webpack.NamedModulesPlugin(),
@@ -18,6 +19,7 @@ glob.sync('./src/pages/*.?(html|ejs)').forEach(item => {
     new HtmlWebpackPlugin({
       filename: `${path.basename(item, path.extname(item))}.html`,
       template: './src/layouts/app.ejs',
+      alwaysWriteToDisk: true,
       templateParameters: {
         page: path.basename(item, path.extname(item))
       }
@@ -25,12 +27,14 @@ glob.sync('./src/pages/*.?(html|ejs)').forEach(item => {
   );
 });
 
+plugins.push(new HtmlWebpackHarddiskPlugin());
+
 module.exports = {
   mode: 'development',
   entry: ['./src/assets/scripts/main.js', './src/assets/styles/main.scss'],
   output: {
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: './dist/'
   },
   module: {
     rules: [
