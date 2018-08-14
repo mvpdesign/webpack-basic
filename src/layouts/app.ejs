@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%= require('../partials/head.html') %>
+
+  <body>
+    <%= require('../partials/header.html') %>
+      <main>
+
+        <%= require(`../pages/${page}.html`) %>
+      </main>
+      <%= require('../partials/footer.html') %>
+  </body>
+
+</html>
